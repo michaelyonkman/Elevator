@@ -9,8 +9,8 @@ class App extends React.Component {
     this.state = {
       floor: 1,
       selected: [],
+      message: '⍇⍈',
       direction: null,
-      message: '',
       btn1disabled: true,
       btn2disabled: false,
       btn3disabled: false,
@@ -29,79 +29,97 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>{this.state.message}</h1>
-        <h1>{this.state.floor}</h1>
-        <div>
-          <button
-            value="1"
-            disabled={this.state.btn1disabled}
-            onClick={this.handleClick}
-          >
-            1
-          </button>
-          <button
-            value="2"
-            disabled={this.state.btn2disabled}
-            onClick={this.handleClick}
-          >
-            2
-          </button>
-          <button
-            value="3"
-            disabled={this.state.btn3disabled}
-            onClick={this.handleClick}
-          >
-            3
-          </button>
-          <button
-            value="4"
-            disabled={this.state.btn4disabled}
-            onClick={this.handleClick}
-          >
-            4
-          </button>
-          <button
-            value="5"
-            disabled={this.state.btn5disabled}
-            onClick={this.handleClick}
-          >
-            5
-          </button>
-          <button
-            value="6"
-            disabled={this.state.btn6disabled}
-            onClick={this.handleClick}
-          >
-            6
-          </button>
-          <button
-            value="7"
-            disabled={this.state.btn7disabled}
-            onClick={this.handleClick}
-          >
-            7
-          </button>
-          <button
-            value="8"
-            disabled={this.state.btn8disabled}
-            onClick={this.handleClick}
-          >
-            8
-          </button>
-          <button
-            value="9"
-            disabled={this.state.btn9disabled}
-            onClick={this.handleClick}
-          >
-            9
-          </button>
-          <button
-            value="10"
-            disabled={this.state.btn10disabled}
-            onClick={this.handleClick}
-          >
-            10
-          </button>
+        <div className="message">
+          <h1>{this.state.message}</h1>
+        </div>
+        <div className="floor">
+          <h1>{this.state.floor}</h1>
+        </div>
+        <div className="button-container">
+          <div className="button-container-left">
+            <button
+              className={this.state.selected.includes(1) ? 'selected' : null}
+              value="1"
+              disabled={this.state.btn1disabled}
+              onClick={this.handleClick}
+            >
+              1
+            </button>
+            <button
+              className={this.state.selected.includes(3) ? 'selected' : null}
+              value="3"
+              disabled={this.state.btn3disabled}
+              onClick={this.handleClick}
+            >
+              3
+            </button>
+            <button
+              className={this.state.selected.includes(5) ? 'selected' : null}
+              value="5"
+              disabled={this.state.btn5disabled}
+              onClick={this.handleClick}
+            >
+              5
+            </button>
+            <button
+              className={this.state.selected.includes(7) ? 'selected' : null}
+              value="7"
+              disabled={this.state.btn7disabled}
+              onClick={this.handleClick}
+            >
+              7
+            </button>
+            <button
+              className={this.state.selected.includes(9) ? 'selected' : null}
+              value="9"
+              disabled={this.state.btn9disabled}
+              onClick={this.handleClick}
+            >
+              9
+            </button>
+          </div>
+          <div className="button-container-right">
+            <button
+              className={this.state.selected.includes(2) ? 'selected' : null}
+              value="2"
+              disabled={this.state.btn2disabled}
+              onClick={this.handleClick}
+            >
+              2
+            </button>
+            <button
+              className={this.state.selected.includes(4) ? 'selected' : null}
+              value="4"
+              disabled={this.state.btn4disabled}
+              onClick={this.handleClick}
+            >
+              4
+            </button>
+            <button
+              className={this.state.selected.includes(6) ? 'selected' : null}
+              value="6"
+              disabled={this.state.btn6disabled}
+              onClick={this.handleClick}
+            >
+              6
+            </button>
+            <button
+              className={this.state.selected.includes(8) ? 'selected' : null}
+              value="8"
+              disabled={this.state.btn8disabled}
+              onClick={this.handleClick}
+            >
+              8
+            </button>
+            <button
+              className={this.state.selected.includes(10) ? 'selected' : null}
+              value="10"
+              disabled={this.state.btn10disabled}
+              onClick={this.handleClick}
+            >
+              10
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -116,7 +134,7 @@ class App extends React.Component {
     });
     if (!this.state.direction) {
       if (Number(e.target.value) > this.state.floor) {
-        this.setState({ direction: 'up' });
+        this.setState({ direction: 'up', message: '↑' });
         for (let i = 1; i < this.state.floor; i++) {
           this.setState({
             ['btn' + String(i) + 'disabled']: true,
@@ -132,7 +150,7 @@ class App extends React.Component {
           }
         }, 1000);
       } else if (Number(e.target.value) < this.state.floor) {
-        this.setState({ direction: 'down' });
+        this.setState({ direction: 'down', message: '↓' });
         for (let i = 10; i > this.state.floor; i--) {
           this.setState({
             ['btn' + String(i) + 'disabled']: true,
@@ -155,11 +173,11 @@ class App extends React.Component {
   }
   arrived() {
     clearInterval(intervalID);
-    this.setState({ message: 'Doors Opening' });
+    this.setState({ message: '⍇⍈' });
     setTimeout(() => {
-      this.setState({ message: 'Doors Closing' });
       if (this.state.selected.length > 1) {
         if (this.state.direction === 'up') {
+          this.setState({ message: '↑' });
           this.state.selected.shift();
           intervalID = setInterval(() => {
             this.setState({
@@ -171,6 +189,7 @@ class App extends React.Component {
             }
           }, 1000);
         } else if (this.state.direction === 'down') {
+          this.setState({ message: '↓' });
           this.state.selected.pop();
           intervalID = setInterval(() => {
             this.setState({
@@ -187,7 +206,6 @@ class App extends React.Component {
         }
       } else {
         this.state.selected.pop();
-        console.log('DONE!!!', this.state.selected);
         this.reset();
       }
     }, 5000);
