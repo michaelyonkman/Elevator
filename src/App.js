@@ -9,7 +9,7 @@ class App extends React.Component {
     this.state = {
       floor: 1,
       selected: [],
-      message: '⍇⍈',
+      message: '◀︎▶︎',
       direction: null,
       btn1disabled: true,
       btn2disabled: false,
@@ -31,14 +31,17 @@ class App extends React.Component {
     return (
       <div className="App">
         <audio id="ding">
-          <source src="https://www.soundsnap.com/streamers/play.php?id=1593566209.8402:6bea42819f57baa1272b32325b3e3cbeecabe02a:a1a58cb466f7814b606e1d6aea62024f1da2ba98d7c6f1229a226b7334d087f138e1fb8cf0191c8ede7f6637f41f3702d1e24d4801f7439b022ff6b46d5f7dfce05101f99a4ca2d61c597d49d2eddb6fcdc6a9642886c7509ec2e4ecffc6485c8d82c8a604c78c415cf289a505b2a5ac2b4982320fd362e9a57345ec47c0121b83fcb34c3a354fb2fe32382ea82393c1de85f4fa017a721f55322a40482bb4755d2be1bd3fc32b68f70b7a096f52cd2afd0bfe992b675828f4c0731d2a682e09b55f0a84c5fd86047ce82eb2107af5ec7c9098cd3ef3b4fec390bb6c03524f43ffc430588137b59224dbbbf93685ea6fac1fd9deb2d6dd09af2713b977d8f35688c4ecb06ab72f8aa8f524f012b36168a8036ff77a4feb5c7c533afb71a2b44fbbb443aee44ca906afeea7a88673a6b1"></source>
+          <source src="https://www.freesoundslibrary.com/wp-content/uploads/2019/03/elevator-ding-sound.mp3"></source>
         </audio>
-        <div className="message">
-          <h1>{this.state.message}</h1>
+        <div className="message-floor-container">
+          <div className="message-container">
+            <h1>{this.state.message}</h1>
+          </div>
+          <div className="floor-container">
+            <h1>{this.state.floor}</h1>
+          </div>
         </div>
-        <div className="floor">
-          <h1>{this.state.floor}</h1>
-        </div>
+
         <div className="button-container">
           <div className="button-container-left">
             <button
@@ -138,7 +141,7 @@ class App extends React.Component {
     });
     if (!this.state.direction) {
       if (Number(e.target.value) > this.state.floor) {
-        this.setState({ direction: 'up', message: '↑' });
+        this.setState({ direction: 'up', message: '▲' });
         for (let i = 1; i < this.state.floor; i++) {
           this.setState({
             ['btn' + String(i) + 'disabled']: true,
@@ -154,7 +157,7 @@ class App extends React.Component {
           }
         }, 1000);
       } else if (Number(e.target.value) < this.state.floor) {
-        this.setState({ direction: 'down', message: '↓' });
+        this.setState({ direction: 'down', message: '▼' });
         for (let i = 10; i > this.state.floor; i--) {
           this.setState({
             ['btn' + String(i) + 'disabled']: true,
@@ -178,11 +181,11 @@ class App extends React.Component {
   arrived() {
     this.playAudio();
     clearInterval(intervalID);
-    this.setState({ message: '⍇⍈' });
+    this.setState({ message: '◀︎▶' });
     setTimeout(() => {
       if (this.state.selected.length > 1) {
         if (this.state.direction === 'up') {
-          this.setState({ message: '↑' });
+          this.setState({ message: '▲' });
           this.state.selected.shift();
           intervalID = setInterval(() => {
             this.setState({
@@ -194,7 +197,7 @@ class App extends React.Component {
             }
           }, 1000);
         } else if (this.state.direction === 'down') {
-          this.setState({ message: '↓' });
+          this.setState({ message: '▼' });
           this.state.selected.pop();
           intervalID = setInterval(() => {
             this.setState({

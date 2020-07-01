@@ -42,17 +42,21 @@
   margin: 1rem;
 }
 
-.floor {
-  width: 25%;
-  height: 5rem;
-  background: black;
+.message-floor-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 4rem;
 }
 
-.message {
-  font-size: 1.3rem;
-  width: 25%;
-  height: 5rem;
-  background: black;
+.message-container {
+  position: fixed;
+  top: 0;
+}
+
+.floor-container {
+  position: fixed;
+  top: 30%;
 }
 
 button:disabled {
